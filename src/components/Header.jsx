@@ -20,7 +20,6 @@ export default function Header(props) {
 const Container = styled.div`
 	padding: 0 4rem;
 	.logo {
-		height: 5rem;
 		img {
 			height: 5rem;
 		}

@@ -74,7 +74,7 @@ const Container = styled.div`
 		left: 0;
 		background-color: #2929297f;
 		height: 100vh;
-		width: 100vh;
+		width: 100vw;
 		display: grid;
 		grid-template-rows: 15vh 85vh;
 		.body {
@@ -89,7 +89,7 @@ const Container = styled.div`
 			}
 			.form {
 				display: grid;
-				grid-template-columns: ${({showPassword})=>showPassword ? "1fr 1fr":"2fr 1fr"};
+				grid-template-columns: ${({showPassword}) => showPassword ? "1fr 1fr":"2fr 1fr"};
 				width: 60%;
 				input {
 					color: black;
