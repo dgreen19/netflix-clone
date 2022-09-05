@@ -21,7 +21,7 @@ export default function Login() {
 	};
 	const navigate = useNavigate();
 
-	//if user already has an existing account will be redirectedk to the Netflix homepage!
+	//if user already has an existing account will be redirected to the Netflix homepage
 	onAuthStateChanged(firebaseAuth, (currentUser) => {
 		if (currentUser) navigate("/");
 	});

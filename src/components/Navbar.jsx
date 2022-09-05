@@ -23,10 +23,10 @@ onAuthStateChanged(firebaseAuth, (currentUser) => {
     const [inputHover, setInputHover] = useState(false);
 	return (
 		<Container>
-			<nav className={`flex ${isScrolled} ? "scrolled" : ""`}>
+			<nav className={`${isScrolled ? "scrolled" : ""} flex`}>
 				<div className="left flex a-center">
 					<div className="brand flex a-center-j-center">
-						<img src={logo} alt="" />
+						<img src={logo} alt="Logo" />
 					</div>
 					<ul className="links flex">
 						{links.map(({name, link}) => {
@@ -40,7 +40,8 @@ onAuthStateChanged(firebaseAuth, (currentUser) => {
                 </div>
                 <div className="right flex a-center">
                     <div className={`search ${showSearch ? "show-search" : ""}`}>
-                        <button onFocus={() => setShowSearch(true)} onBlur={() => {
+                        <button onFocus={() => setShowSearch(true)}
+                            onBlur={() => {
                             if (!inputHover) setShowSearch(false);
                         }}>
                             <FaSearch></FaSearch>
@@ -61,7 +62,7 @@ onAuthStateChanged(firebaseAuth, (currentUser) => {
 }
 
 const Container = styled.div`
-	.scroll {
+	.scrolled {
 		background-color: black;
 	}
 	nav {
