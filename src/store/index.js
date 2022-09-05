@@ -15,6 +15,10 @@ export const getGenres = createAsyncThunk("netflix/genres", async () => {
     return genres
 }); 
 
+export const fetchMovies = createAsyncThunk("netflix/trending", async ({type}, thunkApi) => {
+    const {netflix:NetflixSlice} = thunkApi.getState()
+});
+
 const NetflixSlice = createSlice({
     name: "Netflix",
     initialState,
