@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import JaneAssessment from "./pages/JaneAssessment";
 import Login from "./pages/Login";
 import Netflix from "./pages/Netflix";
 import Player from "./pages/Player";
@@ -14,7 +13,6 @@ export default function App() {
 				<Route exact path="/signup" element={<SignUp />} />
 				<Route exact path="/player" element={<Player />} />
 				<Route exact path="/" element={<Netflix />} />
-				<Route exact path="/janeassessment" element={<JaneAssessment/>}/>
 			</Routes>
 		</BrowserRouter>
 	);
