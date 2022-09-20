@@ -8,10 +8,27 @@ import { RiThumbUpFill, RiThumbDownFill } from "react-icons/ri";
 import { BsCheck } from "react-icons/bs";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BiChevronDown } from "react-icons/bi";
+import { onAuthStateChanged } from "firebase/auth";
+import { firebaseAuth } from "../utils/firebase-config";
+import axios from "axios";
 
 export default React.memo(function Card({ movieData, isLiked = false }) {
 	const [isHovered, setIsHovered] = useState(false);
+	const [email, setEmail] = useState(undefined);
 	const navigate = useNavigate();
+	onAuthStateChanged(firebaseAuth, (currentUser) => {
+		if (currentUser) setEmail(currentUser.email);
+		else navigate("/login");
+	});
+
+	const addToList = async () => {
+		try {
+			await axios.post("http://localhost:5000/api/user/add",{email,data:movieData})
+		} catch (err) {
+			console.log(err);
+			
+		}
+	}
 	return (
 		<Container
 			onMouseEnter={() => setIsHovered(true)}
@@ -53,7 +70,7 @@ export default React.memo(function Card({ movieData, isLiked = false }) {
 									{isLiked ? (
 										<BsCheck title="Remove from list"></BsCheck>
 									) : (
-										<AiOutlinePlus title="Add to my list"></AiOutlinePlus>
+										<AiOutlinePlus title="Add to my list" onClick={addToList}></AiOutlinePlus>
 									)}
 								</RiThumbDownFill>
 							</div>
@@ -73,7 +90,7 @@ export default React.memo(function Card({ movieData, isLiked = false }) {
 			)}
 		</Container>
 	);
-})
+});
 
 const Container = styled.div`
 	max-width: 230px;
@@ -120,33 +137,30 @@ const Container = styled.div`
 				position: absolute;
 			}
 		}
-		.info-container{
+		.info-container {
 			padding: 1rem;
 			gap: 0.5rem;
 		}
-		.icons{
-			.controls{
+		.icons {
+			.controls {
 				display: flex;
 				gap: 1rem;
-
-
 			}
-			svg{
+			svg {
 				font-size: 2rem;
-				cursor:pointer;
-				transition:0.3s ease-in-out;
-				&:hover{
-					color:#b8b8b8;
-
+				cursor: pointer;
+				transition: 0.3s ease-in-out;
+				&:hover {
+					color: #b8b8b8;
 				}
 			}
 		}
-		.genres{
-			ul{
+		.genres {
+			ul {
 				gap: 1rem;
-				li{
+				li {
 					padding-right: 0.7rem;
-					&:first-of-type{
+					&:first-of-type {
 						list-style-type: none;
 					}
 				}

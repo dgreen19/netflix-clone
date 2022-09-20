@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { fetchDataByGenre } from "../store";
 
 
 export default function SelectGenre({ genres, type }) {
-    const dispatch = useDispatch();
+	const dispatch = useDispatch();
+	//remove lines 9-12 if it causes additional errors
+	useEffect(() => {
+		if (genres) dispatch(fetchDataByGenre({ genre: genres[0], type }));
+	}, [genres]);
 	return (
         <Select className="flex" onChange={e => {
             dispatch(fetchDataByGenre({genre:e.target.value, type}))
