@@ -1,44 +1,42 @@
-import React, { useEffect, useState } from 'react'
-import Navbar from '../components/Navbar';
-import BackgroundImage from '../Assets/home.jpg';
-import MovieLogo from '../Assets/homeTitle.webp';
-import { FaPlay } from 'react-icons/fa';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
+import React, { useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
+import BackgroundImage from "../Assets/home.jpg";
+import MovieLogo from "../Assets/homeTitle.webp";
+import { FaPlay } from "react-icons/fa";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 import styled from "styled-components";
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchMovies, getGenres } from '../store';
-import Slider from '../components/Slider';
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMovies, getGenres } from "../store";
+import Slider from "../components/Slider";
 
 export default function Netflix() {
+	const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
 
-  const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
+	const navigate = useNavigate();
 
-  const navigate = useNavigate()
+	const dispatch = useDispatch();
 
-  const dispatch = useDispatch();
+	const movies = useSelector((state) => state.netflix.movies);
 
-  const movies = useSelector((state) => state.netflix.movies)
+	useEffect(() => {
+		dispatch(getGenres());
+	}, []);
 
-  useEffect(() => {
-    dispatch(getGenres())
-  },[])
+	useEffect(() => {
+		if (genresLoaded) {
+			dispatch(fetchMovies({ type: "all" }));
+		}
+	}, [genresLoaded]);
 
-  useEffect(() => {
-    if (genresLoaded) {
-      dispatch(fetchMovies({type:"all"}));
-    } 
-  })
+	const [isScrolled, setIsScrolled] = useState(false);
+	window.onscroll = () => {
+		setIsScrolled(window.pageYOffset === 0 ? false : true);
+		return () => (window.onscroll = null);
+	};
 
-  const [isScrolled, setIsScrolled] = useState(false);
-  window.onscroll = () => {
-    setIsScrolled(window.pageYOffset === 0 ? false : true);
-    return () => (window.onscroll = null);
-  };
-
-  return (
+	return (
 		<Container>
-			
 			<Navbar isScrolled={isScrolled}></Navbar>
 			<div className="hero">
 				<img
@@ -64,8 +62,8 @@ export default function Netflix() {
 						</button>
 					</div>
 				</div>
-      </div>
-      <Slider movies={movies}></Slider>
+			</div>
+			<Slider movies={movies}></Slider>
 		</Container>
 	);
 }
